@@ -6,7 +6,7 @@ Laravel project with Inertia and React.
 
 - PHP 8.3 or higher
 - Composer
-- Node.js y npm
+- Node.js and npm
 
 ## Installation
 
@@ -28,6 +28,28 @@ Prepare the database:
 
 ```bash
 php artisan migrate
+```
+
+## Admin path
+
+Authenticated routes are grouped under the admin path configured in `.env`:
+
+```env
+ADMIN_PATH=admin
+```
+
+For example, changing it to `backoffice` will move the dashboard to:
+
+```txt
+/backoffice/dashboard
+```
+
+After changing `ADMIN_PATH`, refresh the Laravel config, regenerate frontend route helpers, and rebuild the assets:
+
+```bash
+php artisan config:clear
+php artisan wayfinder:generate --with-form
+npm run build
 ```
 
 ## Run the project

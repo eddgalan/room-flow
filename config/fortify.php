@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'home' => '/dashboard',
+    'home' => '/'.(trim((string) env('ADMIN_PATH', 'admin'), '/') ?: 'admin').'/dashboard',
 
     /*
     |--------------------------------------------------------------------------
