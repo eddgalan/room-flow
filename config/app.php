@@ -54,6 +54,10 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'admin_path' => trim((string) env('ADMIN_PATH', 'admin'), '/') ?: 'admin',
+
+    'user_factory_password' => env('USER_FACTORY_PASSWORD', 'password'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

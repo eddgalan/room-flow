@@ -1,11 +1,14 @@
-import { Form, Head } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
-import { update } from '@/routes/password';
+import { Head } from '@inertiajs/react';
+
+// Restore these imports and the form below when Features::resetPasswords() is enabled.
+// import { Form } from '@inertiajs/react';
+// import InputError from '@/components/input-error';
+// import PasswordInput from '@/components/password-input';
+// import { Button } from '@/components/ui/button';
+// import { Input } from '@/components/ui/input';
+// import { Label } from '@/components/ui/label';
+// import { Spinner } from '@/components/ui/spinner';
+// import { update } from '@/routes/password';
 
 type Props = {
     token: string;
@@ -14,10 +17,15 @@ type Props = {
 };
 
 export default function ResetPassword({ token, email, passwordRules }: Props) {
+    void token;
+    void email;
+    void passwordRules;
+
     return (
         <>
             <Head title="Reset password" />
 
+            {/*
             <Form
                 {...update.form()}
                 transform={(data) => ({ ...data, token, email })}
@@ -86,6 +94,11 @@ export default function ResetPassword({ token, email, passwordRules }: Props) {
                     </div>
                 )}
             </Form>
+            */}
+
+            <p className="text-center text-sm text-muted-foreground">
+                Password reset is currently disabled.
+            </p>
         </>
     );
 }

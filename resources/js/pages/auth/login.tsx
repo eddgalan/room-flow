@@ -2,22 +2,18 @@ import { Form, Head } from '@inertiajs/react';
 import InputError from '@/components/input-error';
 import PasskeyVerify from '@/components/passkey-verify';
 import PasswordInput from '@/components/password-input';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import { register } from '@/routes';
 import { store } from '@/routes/login';
-import { request } from '@/routes/password';
 
 type Props = {
     status?: string;
-    canResetPassword: boolean;
 };
 
-export default function Login({ status, canResetPassword }: Props) {
+export default function Login({ status }: Props) {
     return (
         <>
             <Head title="Log in" />
@@ -33,32 +29,25 @@ export default function Login({ status, canResetPassword }: Props) {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="login">
+                                    Email address or username
+                                </Label>
                                 <Input
-                                    id="email"
-                                    type="email"
-                                    name="email"
+                                    id="login"
+                                    type="text"
+                                    name="login"
                                     required
                                     autoFocus
                                     tabIndex={1}
-                                    autoComplete="email"
-                                    placeholder="email@example.com"
+                                    autoComplete="username"
+                                    placeholder="email@example.com or username"
                                 />
-                                <InputError message={errors.email} />
+                                <InputError message={errors.login} />
                             </div>
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
                                     <Label htmlFor="password">Password</Label>
-                                    {canResetPassword && (
-                                        <TextLink
-                                            href={request()}
-                                            className="ml-auto text-sm"
-                                            tabIndex={5}
-                                        >
-                                            Forgot your password?
-                                        </TextLink>
-                                    )}
                                 </div>
                                 <PasswordInput
                                     id="password"
@@ -91,13 +80,6 @@ export default function Login({ status, canResetPassword }: Props) {
                                 Log in
                             </Button>
                         </div>
-
-                        <div className="text-center text-sm text-muted-foreground">
-                            Don't have an account?{' '}
-                            <TextLink href={register()} tabIndex={5}>
-                                Sign up
-                            </TextLink>
-                        </div>
                     </>
                 )}
             </Form>
@@ -113,5 +95,5 @@ export default function Login({ status, canResetPassword }: Props) {
 
 Login.layout = {
     title: 'Log in to your account',
-    description: 'Enter your email and password below to log in',
+    description: 'Enter your email or username and password below to log in',
 };

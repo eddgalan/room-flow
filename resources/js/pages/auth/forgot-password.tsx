@@ -1,13 +1,16 @@
 // Components
-import { Form, Head } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
-import InputError from '@/components/input-error';
+import { Head } from '@inertiajs/react';
 import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { login } from '@/routes';
-import { email } from '@/routes/password';
+
+// Restore these imports and the form below when Features::resetPasswords() is enabled.
+// import { Form } from '@inertiajs/react';
+// import { LoaderCircle } from 'lucide-react';
+// import InputError from '@/components/input-error';
+// import { Button } from '@/components/ui/button';
+// import { Input } from '@/components/ui/input';
+// import { Label } from '@/components/ui/label';
+// import { email } from '@/routes/password';
 
 export default function ForgotPassword({ status }: { status?: string }) {
     return (
@@ -20,6 +23,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                 </div>
             )}
 
+            {/*
             <div className="space-y-6">
                 <Form {...email.form()}>
                     {({ processing, errors }) => (
@@ -58,6 +62,12 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     <span>Or, return to</span>
                     <TextLink href={login()}>log in</TextLink>
                 </div>
+            </div>
+            */}
+
+            <div className="space-x-1 text-center text-sm text-muted-foreground">
+                <span>Password reset is currently disabled.</span>
+                <TextLink href={login()}>Return to log in</TextLink>
             </div>
         </>
     );

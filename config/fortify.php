@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'username' => 'email',
+    'username' => 'login',
 
     'email' => 'email',
 
@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'home' => '/dashboard',
+    'home' => '/'.(trim((string) env('ADMIN_PATH', 'admin'), '/') ?: 'admin').'/dashboard',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,8 +161,8 @@ return [
     */
 
     'features' => [
-        Features::registration(),
-        Features::resetPasswords(),
+        // Features::registration(),
+        // Features::resetPasswords(),
         Features::emailVerification(),
         Features::twoFactorAuthentication([
             'confirm' => true,
