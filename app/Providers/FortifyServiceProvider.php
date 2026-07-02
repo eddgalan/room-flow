@@ -46,12 +46,12 @@ class FortifyServiceProvider extends ServiceProvider
             $login = (string) $request->input(Fortify::username());
             $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
             $user = User::where($field, $login)->first();
-
-            if ($user && Hash::check((string) $request->password, $user->password)) {
-                return $user;
+            // ToDo: Validate user role
+            if (! $user || ! Hash::check((string) $request->password, $user->password)) {
+                return null;
             }
 
-            return null;
+            return $user->enabled ? $user : null;
         });
     }
 

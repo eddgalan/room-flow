@@ -80,6 +80,20 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_disabled_users_can_not_authenticate()
+    {
+        $user = User::factory()->create([
+            'enabled' => false,
+        ]);
+
+        $this->post(route('login.store'), [
+            'login' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertGuest();
+    }
+
     public function test_users_can_logout()
     {
         $user = User::factory()->create();
