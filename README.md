@@ -30,6 +30,16 @@ Prepare the database:
 php artisan migrate
 ```
 
+## Factory password
+
+The default password used by the user factory is configured in `.env`:
+
+```env
+USER_FACTORY_PASSWORD=password
+```
+
+Use this value when signing in with users created by factories or seeders.
+
 ## Admin path
 
 Authenticated routes are grouped under the admin path configured in `.env`:
