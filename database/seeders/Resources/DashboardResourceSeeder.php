@@ -8,6 +8,8 @@ use App\Authorization\DashboardResources;
 
 class DashboardResourceSeeder extends Seeder
 {
+    public const string GUARD = 'web';
+
     /**
      * @return void
      */
@@ -20,7 +22,7 @@ class DashboardResourceSeeder extends Seeder
         foreach ($resources as $resource) {
             SpatieResource::firstOrCreate([
                 'name' => $resource,
-                'guard_name' => 'web',
+                'guard_name' => self::GUARD,
             ]);
         }
     }
