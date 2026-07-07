@@ -2,18 +2,23 @@
 
 namespace Database\Seeders;
 
+use App\Authorization\ResourceRegistry;
 use Illuminate\Database\Seeder;
-use Database\Seeders\Resources\DashboardResourceSeeder;
+use Spatie\Permission\Models\Permission as SpatieResource;
 
 class ResourceSeeder extends Seeder
 {
+    private const string GUARD = 'web';
+
     /**
      * @return void
      */
     public function run(): void
     {
-        $this->call([
-            DashboardResourceSeeder::class,
-        ]);
+        $resources = ResourceRegistry::getAllResources();
+
+        foreach ($resources as $resource) {
+            SpatieResource::findOrCreate($resource, self::GUARD);
+        }
     }
 }
