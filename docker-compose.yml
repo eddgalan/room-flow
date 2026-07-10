@@ -1,0 +1,13 @@
+services:
+    room-flow:
+        build: .
+        container_name: room-flow
+        ports:
+            - "8085:80"
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - room-flow-network
+networks:
+    room-flow-network:
+        external: true
