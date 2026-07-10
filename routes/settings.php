@@ -25,6 +25,10 @@ Route::prefix($adminPath)->middleware(['auth', 'verified'])->group(function () {
         ->middleware('throttle:6,1')
         ->name('user-password.update');
 
+    Route::inertia('settings/roles', 'settings/roles')
+        ->middleware('can:settings.roles.view')
+        ->name('roles.edit');
+
     Route::inertia('settings/appearance', 'settings/appearance')->name('appearance.edit');
 });
 

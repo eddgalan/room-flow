@@ -4,6 +4,9 @@ export const permissions = {
             view: 'settings.profile.view',
             update: 'settings.profile.update',
         },
+        roles: {
+            view: 'settings.roles.view',
+        },
         security: 'settings.security',
         appearance: 'settings.appearance',
     },

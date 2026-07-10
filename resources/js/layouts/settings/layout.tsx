@@ -10,6 +10,7 @@ import type { PermissionName } from '@/lib/permissions';
 import { cn, toUrl } from '@/lib/utils';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
+import { edit as editRoles } from '@/routes/roles';
 import { edit as editSecurity } from '@/routes/security';
 import type { NavItem } from '@/types';
 
@@ -23,6 +24,12 @@ const sidebarNavItems: SettingsNavItem[] = [
         href: edit(),
         icon: null,
         permission: permissions.settings.profile.view,
+    },
+    {
+        title: 'Roles',
+        href: editRoles(),
+        icon: null,
+        permission: permissions.settings.roles.view,
     },
     {
         title: 'Security',
