@@ -1,6 +1,10 @@
 services:
     room-flow:
-        build: .
+        image: room-flow-app
+        build:
+            context: .
+            args:
+                INSTALL_XDEBUG: "true"
         container_name: room-flow
         ports:
             - "8085:80"
@@ -8,6 +12,24 @@ services:
             - ./:/var/www/html
         networks:
             - room-flow-network
+    room-flow-node:
+        image: room-flow-app
+        container_name: room-flow-node
+        working_dir: /var/www/html
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./:/var/www/html
+            - room-flow-node-modules:/var/www/html/node_modules
+        command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
+        environment:
+            CHOKIDAR_USEPOLLING: "true"
+        depends_on:
+            - room-flow
+        networks:
+            - room-flow-network
+volumes:
+    room-flow-node-modules:
 networks:
     room-flow-network:
         external: true
