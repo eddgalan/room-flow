@@ -21,9 +21,10 @@ services:
         volumes:
             - ./:/var/www/html
             - room-flow-node-modules:/var/www/html/node_modules
-        command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
+        command: sh -c "mkdir -p /var/www/.npm && chown -R www-data:www-data /var/www/.npm /var/www/html/node_modules && su www-data -s /bin/sh -c 'npm ci && npm run dev -- --host 0.0.0.0'"
         environment:
             CHOKIDAR_USEPOLLING: "true"
+            NPM_CONFIG_CACHE: /var/www/.npm
         depends_on:
             - room-flow
         networks:

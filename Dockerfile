@@ -40,5 +40,7 @@ RUN mkdir -p \
         storage/framework/sessions \
         storage/framework/views \
         storage/logs \
+        /var/www/.npm \
+        /var/www/html/node_modules \
         bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache
+    && chown -R www-data:www-data storage bootstrap/cache /var/www/.npm /var/www/html/node_modules
