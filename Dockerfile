@@ -31,6 +31,8 @@ RUN if [ "$INSTALL_XDEBUG" = "true" ]; then \
         && docker-php-ext-enable xdebug; \
     fi
 RUN a2enmod rewrite
+COPY docker/php.ini /usr/local/etc/php/php.ini-development
+ENV PHP_INI_FILE php.ini
 COPY --from=composer:2.10.1 /usr/bin/composer /usr/bin/composer
 COPY docker/apache2.conf /etc/apache2/apache2.conf
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
