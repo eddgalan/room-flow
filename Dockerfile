@@ -36,6 +36,7 @@ ENV PHP_INI_FILE php.ini
 COPY --from=composer:2.10.1 /usr/bin/composer /usr/bin/composer
 COPY docker/apache2.conf /etc/apache2/apache2.conf
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY . .
 RUN mkdir -p \
         storage/framework/cache \
