@@ -1,18 +1,18 @@
 import { Head } from '@inertiajs/react';
 import Heading from '@/components/heading';
-import { edit } from '@/routes/roles';
+import { index } from '@/routes/settings/roles';
 
-export default function Roles() {
+export default function Index() {
     return (
         <>
-            <Head title="Roles settings" />
+            <Head title="Index settings" />
 
-            <h1 className="sr-only">Roles settings</h1>
+            <h1 className="sr-only">Index settings</h1>
 
             <div className="space-y-6">
                 <Heading
                     variant="small"
-                    title="Roles"
+                    title="Index"
                     description="Manage roles and their permissions"
                 />
             </div>
@@ -20,11 +20,11 @@ export default function Roles() {
     );
 }
 
-Roles.layout = {
+Index.layout = {
     breadcrumbs: [
         {
             title: 'Roles settings',
-            href: edit(),
+            href: index(),
         },
     ],
 };
