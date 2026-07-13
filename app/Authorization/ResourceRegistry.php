@@ -17,11 +17,51 @@ class ResourceRegistry
     public static function getAllResources(): array
     {
         $resources = [];
+
+        foreach (self::resourceClasses() as $reflection) {
+            $resources = array_merge(
+                $resources,
+                array_filter(
+                    array_values($reflection->getConstants()),
+                    is_string(...),
+                )
+            );
+        }
+
+        return array_values(array_unique($resources));
+    }
+
+    /**
+     * Retrieves descriptions keyed by the resource permission name.
+     *
+     * @return array<string, string>
+     */
+    public static function getAllResourceDescriptions(): array
+    {
+        $descriptions = [];
+
+        foreach (self::resourceClasses() as $reflection) {
+            /** @var class-string<ResourceDefinition> $className */
+            $className = $reflection->getName();
+
+            $descriptions = array_merge($descriptions, $className::descriptions());
+        }
+
+        return $descriptions;
+    }
+
+    /**
+     * @return array<int, ReflectionClass>
+     */
+    private static function resourceClasses(): array
+    {
         $resourcesPath = app_path('Authorization/Resources');
 
         if (! File::isDirectory($resourcesPath)) {
             return [];
         }
+
+        $classes = [];
 
         foreach (File::allFiles($resourcesPath) as $file) {
             $relativeClass = substr($file->getRelativePathname(), 0, -4);
@@ -38,15 +78,9 @@ class ResourceRegistry
                 continue;
             }
 
-            $resources = array_merge(
-                $resources,
-                array_filter(
-                    array_values($reflection->getConstants()),
-                    is_string(...),
-                )
-            );
+            $classes[] = $reflection;
         }
 
-        return array_values(array_unique($resources));
+        return $classes;
     }
 }

@@ -19,9 +19,16 @@ class ResourceSeeder extends Seeder
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $resources = ResourceRegistry::getAllResources();
+        $descriptions = ResourceRegistry::getAllResourceDescriptions();
 
         foreach ($resources as $resource) {
-            SpatieResource::findOrCreate($resource, self::GUARD);
+            $permission = SpatieResource::findOrCreate($resource, self::GUARD);
+
+            $permission
+                ->forceFill([
+                    'description' => $descriptions[$resource] ?? null,
+                ])
+                ->save();
         }
 
         app(PermissionRegistrar::class)->forgetCachedPermissions();

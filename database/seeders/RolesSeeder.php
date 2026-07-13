@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use App\Authorization\ResourceRegistry;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Contracts\Role as RoleContract;
+use Spatie\Permission\Models\Role;
 
 class RolesSeeder extends Seeder
 {
