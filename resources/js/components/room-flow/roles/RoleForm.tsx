@@ -1,14 +1,16 @@
 import { Form, Link } from '@inertiajs/react';
+import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { index as roles_index } from '@/routes/settings/roles';
+import { store } from '@/routes/settings/roles';
 
 export default function RoleForm() {
     return (
-        <Form>
-            {({ processing }) => (
+        <Form {...store.form()}>
+            {({ errors, processing }) => (
                 <>
                     <div className="grid gap-2 border-b py-4">
                         <Label htmlFor="name">Name</Label>
@@ -21,6 +23,8 @@ export default function RoleForm() {
                             autoComplete="off"
                             tabIndex={1}
                         />
+
+                        <InputError message={errors.name} />
                     </div>
 
                     <div className="mt-6 flex items-center justify-end gap-x-6 px-4">
