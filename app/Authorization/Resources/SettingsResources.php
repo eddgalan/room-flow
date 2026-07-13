@@ -28,6 +28,7 @@ class SettingsResources implements ResourceDefinition
             self::PROFILE => 'View profile settings.',
             self::PROFILE_UPDATE => 'Update profile settings.',
             self::ROLES_VIEW => 'View roles and permissions settings.',
+            self::ROLES_CREATE => 'Create roles.',
             self::SECURITY => 'View and manage security settings.',
             self::APPEARANCE => 'View and manage appearance settings.',
         ];

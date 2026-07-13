@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -32,9 +33,11 @@ class RoleController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
-        //
+        $resources = Permission::all();
+
+        return Inertia::render('settings/roles/create', ['resources' => $resources]);
     }
 
     /**

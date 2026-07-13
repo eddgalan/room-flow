@@ -24,6 +24,10 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () use ($adminPa
                 ->middlewareFor(
                     'index',
                     'can:'.SettingsResources::ROLES_VIEW
+                )
+                ->middlewareFor(
+                    'create',
+                    'can:'.SettingsResources::ROLES_CREATE
                 );
         });
 
