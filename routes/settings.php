@@ -28,6 +28,14 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () use ($adminPa
                 ->middlewareFor(
                     'create',
                     'can:'.SettingsResources::ROLES_CREATE
+                )
+                ->middlewareFor(
+                    'edit',
+                    'can:'.SettingsResources::ROLES_EDIT
+                )
+                ->middlewareFor(
+                    'update',
+                    'can:'.SettingsResources::ROLES_EDIT
                 );
         });
 

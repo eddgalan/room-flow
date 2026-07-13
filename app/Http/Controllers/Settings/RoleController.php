@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\StoreRoleRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\Permission\Models\Permission;
@@ -58,27 +57,31 @@ class RoleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role): Response
     {
-        //
+        $resources = Permission::all();
+
+        return Inertia::render('settings/roles/edit', [
+            'resources' => $resources,
+            'role' => [
+                'id' => $role->id,
+                'name' => $role->name,
+            ],
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreRoleRequest $request, Role $role): RedirectResponse
     {
-        //
+        $role->update($request->validated());
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Role updated.')]);
+
+        return to_route('settings.roles.index');
     }
 
     /**

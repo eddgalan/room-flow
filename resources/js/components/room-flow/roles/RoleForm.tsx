@@ -5,11 +5,20 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { index as roles_index } from '@/routes/settings/roles';
-import { store } from '@/routes/settings/roles';
+import { store, update } from '@/routes/settings/roles';
 
-export default function RoleForm() {
+type Props = {
+    role?: {
+        id: number;
+        name: string;
+    };
+};
+
+export default function RoleForm({ role }: Props) {
+    const form = role ? update.form(role.id) : store.form();
+
     return (
-        <Form {...store.form()}>
+        <Form {...form}>
             {({ errors, processing }) => (
                 <>
                     <div className="grid gap-2 border-b py-4">
@@ -21,6 +30,7 @@ export default function RoleForm() {
                             required
                             autoFocus
                             autoComplete="off"
+                            defaultValue={role?.name}
                             tabIndex={1}
                         />
 
@@ -41,7 +51,7 @@ export default function RoleForm() {
                             disabled={processing}
                         >
                             {processing && <Spinner />}
-                            Save
+                            {role ? 'Update' : 'Save'}
                         </Button>
                     </div>
                 </>

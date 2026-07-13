@@ -14,6 +14,7 @@ class SettingsResources implements ResourceDefinition
     public const string ROLES_VIEW = 'settings.roles.view';
 
     public const string ROLES_CREATE = 'settings.roles.create';
+    public const string ROLES_EDIT = 'settings.roles.edit';
 
     public const string SECURITY = 'settings.security';
 
@@ -29,6 +30,7 @@ class SettingsResources implements ResourceDefinition
             self::PROFILE_UPDATE => 'Update profile settings.',
             self::ROLES_VIEW => 'View roles and permissions settings.',
             self::ROLES_CREATE => 'Create roles.',
+            self::ROLES_EDIT => 'Edit and update roles.',
             self::SECURITY => 'View and manage security settings.',
             self::APPEARANCE => 'View and manage appearance settings.',
         ];
