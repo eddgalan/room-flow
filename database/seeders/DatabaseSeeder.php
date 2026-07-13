@@ -15,10 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            ResourceSeeder::class,
-            RolesSeeder::class,
-        ]);
+        $this->call(RolesSeeder::class);
 
         $adminUser = User::factory()->create([
             'username' => 'admin',
@@ -26,7 +23,6 @@ class DatabaseSeeder extends Seeder
             'lastname' => 'User',
             'email' => 'admin@example.com',
         ]);
-
         $receptionistUser = User::factory()->create([
             'username' => 'receptionist',
             'name' => 'Receptionist',
@@ -36,5 +32,7 @@ class DatabaseSeeder extends Seeder
 
         $adminUser->assignRole(RolesSeeder::ADMIN);
         $receptionistUser->assignRole(RolesSeeder::RECEPTIONIST);
+
+        $this->call(ResourceSeeder::class);
     }
 }

@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Authorization\ResourceRegistry;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Models\Role;
 
 class RolesSeeder extends Seeder
@@ -26,25 +24,7 @@ class RolesSeeder extends Seeder
         ];
 
         foreach ($defaultRoles as $role) {
-            $role = Role::findOrCreate($role, self::GUARD);
-
-            if ($role->name === self::ADMIN) {
-                $this->assignAllResourcesToAdminRole($role);
-            }
-        }
-    }
-
-    /**
-     * Assign all available resources to the admin role.
-     *
-     * @param RoleContract $adminRole
-     * @return void
-     */
-    private function assignAllResourcesToAdminRole(RoleContract $adminRole): void
-    {
-        $resources = ResourceRegistry::getAllResources();
-        foreach ($resources as $resource) {
-            $adminRole->givePermissionTo($resource);
+            Role::findOrCreate($role, self::GUARD);
         }
     }
 }
