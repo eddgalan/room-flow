@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -14,8 +15,17 @@ class RoleController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('settings/roles/index', [
+        $roles = [];
+        foreach (Role::all() as $role) {
+            $roles[] = [
+                'id' => $role->id,
+                'name' => $role->name,
+                'edit_url' => route('settings.roles.edit', $role->id),
+            ];
+        }
 
+        return Inertia::render('settings/roles/index', [
+            'roles' => $roles,
         ]);
     }
 

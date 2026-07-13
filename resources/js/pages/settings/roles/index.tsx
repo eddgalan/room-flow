@@ -1,20 +1,28 @@
 import { Head } from '@inertiajs/react';
 import Heading from '@/components/heading';
+import RolesList from '@/components/room-flow/roles/RolesList';
 import { index } from '@/routes/settings/roles';
+import type { Role } from '@/types/room-flow/role';
 
-export default function Index() {
+type Props = {
+    roles: Role[];
+};
+
+export default function Index({ roles }: Props) {
     return (
         <>
-            <Head title="Index settings" />
+            <Head title="Roles settings" />
 
-            <h1 className="sr-only">Index settings</h1>
+            <h1 className="sr-only">Roles</h1>
 
             <div className="space-y-6">
                 <Heading
                     variant="small"
-                    title="Index"
+                    title="Roles"
                     description="Manage roles and their permissions"
                 />
+
+                <RolesList roles={roles} />
             </div>
         </>
     );
