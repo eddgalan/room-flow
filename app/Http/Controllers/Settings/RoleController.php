@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\StoreRoleRequest;
+use Database\Seeders\RolesSeeder;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -93,8 +94,18 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role): RedirectResponse
     {
-        //
+        if ($role->name === RolesSeeder::ADMIN) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('The administrator role cannot be deleted.')]);
+
+            return back();
+        }
+
+        $role->delete();
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Role deleted.')]);
+
+        return to_route('settings.roles.index');
     }
 }

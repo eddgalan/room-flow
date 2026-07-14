@@ -5,3 +5,7 @@ export interface Role {
     name: string;
     resources?: Resource[];
 }
+
+export interface RoleListItem extends Role {
+    edit_url: string;
+}

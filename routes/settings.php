@@ -36,6 +36,10 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () use ($adminPa
                 ->middlewareFor(
                     'update',
                     'can:'.SettingsResources::ROLES_EDIT
+                )
+                ->middlewareFor(
+                    'destroy',
+                    'can:'.SettingsResources::ROLES_DELETE
                 );
         });
 

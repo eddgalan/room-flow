@@ -1,9 +1,9 @@
 import RoleItem from '@/components/room-flow/roles/RoleItem';
 import RolesToolbar from '@/components/room-flow/roles/RolesToolbar';
-import type { Role } from '@/types/room-flow/role';
+import type { RoleListItem } from '@/types/room-flow/role';
 
 type Props = {
-    roles: Role[];
+    roles: RoleListItem[];
 };
 
 export default function RolesList({ roles }: Props) {

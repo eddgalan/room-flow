@@ -1,8 +1,8 @@
 import { Link } from '@inertiajs/react';
-import type { Role } from '@/types/room-flow/role';
+import type { RoleListItem } from '@/types/room-flow/role';
 
 type Props = {
-    role: Role;
+    role: RoleListItem;
 };
 
 export default function RoleItem({ role }: Props) {

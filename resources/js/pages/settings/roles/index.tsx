@@ -2,10 +2,10 @@ import { Head } from '@inertiajs/react';
 import Heading from '@/components/heading';
 import RolesList from '@/components/room-flow/roles/RolesList';
 import { index } from '@/routes/settings/roles';
-import type { Role } from '@/types/room-flow/role';
+import type { RoleListItem } from '@/types/room-flow/role';
 
 type Props = {
-    roles: Role[];
+    roles: RoleListItem[];
 };
 
 export default function Index({ roles }: Props) {

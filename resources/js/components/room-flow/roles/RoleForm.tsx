@@ -1,6 +1,7 @@
 import { Form, Link } from '@inertiajs/react';
 import InputError from '@/components/input-error';
 import ResourcesTable from '@/components/room-flow/resources/ResourcesTable';
+import RoleDeleteButton from '@/components/room-flow/roles/RoleDeleteButton';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,6 +18,7 @@ type Props = {
 
 export default function RoleForm({ resources, role }: Props) {
     const form = role ? update.form(role.id) : store.form();
+    const isAdministrator = role?.name === 'administrator';
 
     return (
         <Form {...form}>
@@ -33,7 +35,7 @@ export default function RoleForm({ resources, role }: Props) {
                             autoComplete="off"
                             defaultValue={role?.name}
                             tabIndex={1}
-                            disabled={ role?.name === "administrator"}
+                            disabled={isAdministrator}
                         />
 
                         <InputError message={errors.name} />
@@ -43,28 +45,28 @@ export default function RoleForm({ resources, role }: Props) {
                         <div className="grid gap-2 border-b py-4">
                             <h3>Resource list</h3>
                             <p>List of permissions assigned to the role.</p>
-                            <ResourcesTable
-                                resources={resources}
-                                role={role}
-                            />
+                            <ResourcesTable resources={resources} role={role} />
                         </div>
                     )}
 
                     <div className="mt-6 flex items-center justify-end gap-x-6 px-4">
                         <Link
                             href={roles_index()}
-                            className="rounded-md bg-transparent px-4 py-2 text-white hover:bg-red-800"
+                            className="rounded-md bg-transparent px-4 py-2 text-white hover:bg-cyan-800 hover:text-white"
                         >
                             Cancel
                         </Link>
+                        {role && (
+                            <RoleDeleteButton isAdministrator={isAdministrator} role={role} />
+                        )}
                         <Button
                             type="submit"
                             className="rounded-md border px-3 py-2 text-sm font-medium transition-colors hover:bg-cyan-800 hover:text-white"
                             tabIndex={4}
-                            disabled={processing}
+                            disabled={processing || isAdministrator}
                         >
                             {processing && <Spinner />}
-                            {role ? 'Update' : 'Save'}
+                            Save
                         </Button>
                     </div>
                 </>
