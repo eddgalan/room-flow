@@ -3,33 +3,54 @@ import type { PropsWithChildren } from 'react';
 import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useCan } from '@/hooks/use-can';
 import { useCurrentUrl } from '@/hooks/use-current-url';
+import { permissions } from '@/lib/permissions';
+import type { PermissionName } from '@/lib/permissions';
 import { cn, toUrl } from '@/lib/utils';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
+import { index as rolesIndex } from '@/routes/settings/roles';
 import { edit as editSecurity } from '@/routes/security';
 import type { NavItem } from '@/types';
 
-const sidebarNavItems: NavItem[] = [
+type SettingsNavItem = NavItem & {
+    permission: PermissionName;
+};
+
+const sidebarNavItems: SettingsNavItem[] = [
     {
         title: 'Profile',
         href: edit(),
         icon: null,
+        permission: permissions.settings.profile.view,
+    },
+    {
+        title: 'Roles',
+        href: rolesIndex(),
+        icon: null,
+        permission: permissions.settings.roles.view,
     },
     {
         title: 'Security',
         href: editSecurity(),
         icon: null,
+        permission: permissions.settings.security,
     },
     {
         title: 'Appearance',
         href: editAppearance(),
         icon: null,
+        permission: permissions.settings.appearance,
     },
 ];
 
 export default function SettingsLayout({ children }: PropsWithChildren) {
     const { isCurrentOrParentUrl } = useCurrentUrl();
+    const { can } = useCan();
+    const visibleSidebarNavItems = sidebarNavItems.filter((item) =>
+        can(item.permission),
+    );
 
     return (
         <div className="px-4 py-6">
@@ -44,7 +65,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
                         className="flex flex-col space-y-1 space-x-0"
                         aria-label="Settings"
                     >
-                        {sidebarNavItems.map((item, index) => (
+                        {visibleSidebarNavItems.map((item, index) => (
                             <Button
                                 key={`${toUrl(item.href)}-${index}`}
                                 size="sm"
