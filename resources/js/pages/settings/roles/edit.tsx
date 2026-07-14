@@ -2,15 +2,18 @@ import { Head } from '@inertiajs/react';
 import Heading from '@/components/heading';
 import RoleForm from '@/components/room-flow/roles/RoleForm';
 import { index } from '@/routes/settings/roles';
+import type { Resource } from '@/types/room-flow/resource';
 
 type Props = {
     role: {
         id: number;
         name: string;
+        resources?: Resource[];
     };
+    resources: Resource[];
 };
 
-export default function Index({ role }: Props) {
+export default function Index({ resources, role }: Props) {
     return (
         <>
             <Head title="Edit Role" />
@@ -20,7 +23,7 @@ export default function Index({ role }: Props) {
             <div className="space-y-6">
                 <Heading variant="small" title="Edit Role" />
 
-                <RoleForm role={role} />
+                <RoleForm resources={resources} role={role} />
             </div>
         </>
     );

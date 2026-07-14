@@ -46,14 +46,14 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request): RedirectResponse
     {
-        Role::create([
+        $role = Role::create([
             ...$request->validated(),
             'guard_name' => 'web',
         ]);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Role created.')]);
 
-        return to_route('settings.roles.index');
+        return to_route('settings.roles.edit', $role);
     }
 
     /**
@@ -63,11 +63,14 @@ class RoleController extends Controller
     {
         $resources = Permission::all();
 
+        $resourcesInRole = $role->permissions;
+
         return Inertia::render('settings/roles/edit', [
             'resources' => $resources,
             'role' => [
                 'id' => $role->id,
                 'name' => $role->name,
+                'resources' => $resourcesInRole,
             ],
         ]);
     }
@@ -78,6 +81,9 @@ class RoleController extends Controller
     public function update(StoreRoleRequest $request, Role $role): RedirectResponse
     {
         $role->update($request->validated());
+
+        $resources = $request->resources;
+        $role->syncPermissions($resources);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Role updated.')]);
 

@@ -1,20 +1,21 @@
 import { Form, Link } from '@inertiajs/react';
 import InputError from '@/components/input-error';
+import ResourcesTable from '@/components/room-flow/resources/ResourcesTable';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { index as roles_index } from '@/routes/settings/roles';
 import { store, update } from '@/routes/settings/roles';
+import type { Resource } from '@/types/room-flow/resource';
+import type { Role } from '@/types/room-flow/role';
 
 type Props = {
-    role?: {
-        id: number;
-        name: string;
-    };
+    role?: Role;
+    resources?: Resource[];
 };
 
-export default function RoleForm({ role }: Props) {
+export default function RoleForm({ resources, role }: Props) {
     const form = role ? update.form(role.id) : store.form();
 
     return (
@@ -32,10 +33,22 @@ export default function RoleForm({ role }: Props) {
                             autoComplete="off"
                             defaultValue={role?.name}
                             tabIndex={1}
+                            disabled={ role?.name === "administrator"}
                         />
 
                         <InputError message={errors.name} />
                     </div>
+
+                    {role && (
+                        <div className="grid gap-2 border-b py-4">
+                            <h3>Resource list</h3>
+                            <p>List of permissions assigned to the role.</p>
+                            <ResourcesTable
+                                resources={resources}
+                                role={role}
+                            />
+                        </div>
+                    )}
 
                     <div className="mt-6 flex items-center justify-end gap-x-6 px-4">
                         <Link
