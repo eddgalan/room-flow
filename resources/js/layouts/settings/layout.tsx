@@ -10,8 +10,8 @@ import type { PermissionName } from '@/lib/permissions';
 import { cn, toUrl } from '@/lib/utils';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
-import { index as rolesIndex } from '@/routes/settings/roles';
 import { edit as editSecurity } from '@/routes/security';
+import { index as rolesIndex } from '@/routes/settings/roles';
 import type { NavItem } from '@/types';
 
 type SettingsNavItem = NavItem & {
