@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import ActionsBar from '@/components/room-flow/ui/actions-bar';
 import CreateButton from '@/components/room-flow/ui/create-button';
+import DataTable from '@/components/room-flow/ui/data-table';
 import { create } from '@/routes/users';
 
 export default function Index() {
@@ -12,6 +13,7 @@ export default function Index() {
                 <ActionsBar>
                     <CreateButton text="Create user" createRoute={ create } />
                 </ActionsBar>
+                <DataTable />
             </div>
         </>
     );
