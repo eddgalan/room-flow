@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Contracts\HasQuery;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -34,7 +35,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 #[Fillable(['name', 'lastname', 'username', 'enabled', 'phone_number', 'email', 'password'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
-class User extends Authenticatable implements PasskeyUser
+class User extends Authenticatable implements HasQuery, PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasRoles, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
@@ -51,6 +52,55 @@ class User extends Authenticatable implements PasskeyUser
             'enabled' => 'boolean',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFilterableFields(): array
+    {
+        return [
+            'id' => 'integer',
+            'name' => 'string',
+            'lastname' => 'string',
+            'username' => 'string',
+            'enabled' => 'boolean',
+            'email' => 'string',
+            'phone_number' => 'string',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSortableFields(): array
+    {
+        return [
+            'id',
+            'name',
+            'lastname',
+            'username',
+            'enabled',
+            'email',
+            'created_at',
+            'updated_at',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSearchableFields(): array
+    {
+        return [
+            'name',
+            'lastname',
+            'username',
+            'email',
+            'phone_number',
         ];
     }
 }
