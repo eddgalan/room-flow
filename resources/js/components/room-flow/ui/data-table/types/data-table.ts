@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { RouteDefinition } from '@/wayfinder';
 
 export type DataTableRow = Record<string, ReactNode>;
 
@@ -20,3 +21,13 @@ export type DataTableParams = {
     sortDirection?: 'asc' | 'desc';
     filters: Record<string, string | number | boolean>;
 };
+
+type DataTableActionMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
+
+export type Action<T extends object> = {
+    action: string;
+    actionPath: (row: T) => string | RouteDefinition<DataTableActionMethod>;
+    variant?: 'default' | 'destructive';
+};
+
+export type Actions<T extends object> = Action<T>[];

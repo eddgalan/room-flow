@@ -2,7 +2,8 @@ import { Head } from '@inertiajs/react';
 import ActionsBar from '@/components/room-flow/ui/actions-bar';
 import CreateButton from '@/components/room-flow/ui/create-button';
 import DataTable from '@/components/room-flow/ui/data-table';
-import { create, dataTable } from '@/routes/users';
+import type { Actions } from '@/components/room-flow/ui/data-table/types/data-table';
+import { create, dataTable, destroy, edit } from '@/routes/users';
 
 type UserRow = {
     id: number;
@@ -15,6 +16,18 @@ type UserRow = {
     created_at: string;
     updated_at: string;
 };
+
+const actions: Actions<UserRow> = [
+    {
+        action: 'Edit',
+        actionPath: edit,
+    },
+    {
+        action: 'Delete',
+        actionPath: destroy,
+        variant: 'destructive',
+    },
+];
 
 const headers: Array<keyof UserRow> = [
     'id',
@@ -41,6 +54,7 @@ export default function Index() {
                     endpoint={dataTable.url()}
                     headers={headers}
                     caption="Users list"
+                    actions={actions}
                 />
             </div>
         </>

@@ -1,3 +1,4 @@
+import type { Actions } from '@/components/room-flow/ui/data-table/types/data-table';
 import FilterBar from './filter-bar';
 import { useDataTable } from './hooks/use-data-table';
 import Pagination from './pagination';
@@ -11,6 +12,7 @@ type Props<T extends Record<string, unknown>> = {
     caption?: string;
     filter?: boolean;
     pagination?: boolean;
+    actions?: Actions<T>;
 };
 
 export default function DataTable<T extends Record<string, unknown>>({
@@ -19,6 +21,7 @@ export default function DataTable<T extends Record<string, unknown>>({
     caption,
     filter = true,
     pagination = true,
+    actions = [],
 }: Props<T>) {
     const {
         rows,
@@ -60,6 +63,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                 data={rows}
                 caption={caption}
                 isLoading={isLoading}
+                actions={actions}
             />
         </div>
     );
