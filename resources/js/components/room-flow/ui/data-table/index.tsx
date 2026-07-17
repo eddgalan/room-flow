@@ -1,52 +1,66 @@
-import FilterBar from '@/components/room-flow/ui/data-table/filter-bar';
-import Pagination from '@/components/room-flow/ui/data-table/pagination';
-import RecordsCounter from '@/components/room-flow/ui/data-table/records-counter';
-import TableBar from '@/components/room-flow/ui/data-table/table-bar';
-import TableContent from '@/components/room-flow/ui/data-table/table-content';
+import FilterBar from './filter-bar';
+import { useDataTable } from './hooks/use-data-table';
+import Pagination from './pagination';
+import RecordsCounter from './records-counter';
+import TableBar from './table-bar';
+import TableContent from './table-content';
 
-type Props = {
+type Props<T extends Record<string, unknown>> = {
+    endpoint: string;
+    headers: Array<keyof T & string>;
+    caption?: string;
     filter?: boolean;
     pagination?: boolean;
 };
 
-const headers = [
-    'id',
-    'name',
-    'lastname',
-    'username',
-    'enabled',
-    'email',
-    'phone_number',
-    'created_at',
-    'updated_at',
-];
-
-const data = [
-    {
-        id: '1',
-        name: 'Admin',
-        lastname: 'Admin',
-        username: 'AdminUser',
-        enabled: '1',
-        email: 'admin@mail.com',
-        phone_number: '5500000000',
-        created_at: '---',
-        updated_at: '---',
-    },
-];
-
-export default function Index({
+export default function DataTable<T extends Record<string, unknown>>({
+    endpoint,
+    headers,
+    caption,
     filter = true,
     pagination = true,
-}: Props) {
+}: Props<T>) {
+    const {
+        rows,
+        currentPage,
+        lastPage,
+        perPage,
+        total,
+        isLoading,
+        error,
+        changePage,
+    } = useDataTable<T>({
+        endpoint,
+    });
+
     return (
-        <div className="w-full flex-row">
+        <div className="w-full">
             {filter && <FilterBar />}
+
             <TableBar>
-                <RecordsCounter />
-                {pagination && <Pagination />}
+                <RecordsCounter records={total} />
+
+                {pagination && (
+                    <Pagination
+                        currentPage={currentPage}
+                        recordsPerPage={perPage}
+                        lastPage={lastPage}
+                        onPageChange={changePage}
+                        disabled={isLoading}
+                    />
+                )}
             </TableBar>
-            <TableContent headers={headers} data={data} caption="Users list" />
+
+            {error && (
+                <div className="p-4 text-sm text-destructive">{error}</div>
+            )}
+
+            <TableContent
+                headers={headers}
+                data={rows}
+                caption={caption}
+                isLoading={isLoading}
+            />
         </div>
     );
 }

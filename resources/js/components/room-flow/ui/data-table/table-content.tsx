@@ -9,24 +9,35 @@ import {
     TableRow,
 } from '@/components/ui/table';
 
-type Props = {
-    headers: string[];
-    data: Record<string, ReactNode>[];
+type Props<T extends Record<string, unknown>> = {
+    headers: Array<keyof T & string>;
+    data: T[];
     caption?: string;
+    isLoading?: boolean;
 };
 
-function renderCellValue(value: ReactNode) {
+function renderCellValue(value: unknown): ReactNode {
     if (typeof value === 'boolean') {
         return value ? 'Yes' : 'No';
     }
 
-    return value ?? '-';
+    if (typeof value === 'string' || typeof value === 'number') {
+        return value;
+    }
+
+    return '-';
 }
 
-export default function TableContent({ headers, data, caption }: Props) {
+export default function TableContent<T extends Record<string, unknown>>({
+    headers,
+    data,
+    caption,
+    isLoading = false,
+}: Props<T>) {
     return (
         <Table>
             {caption && <TableCaption>{caption}</TableCaption>}
+
             <TableHeader>
                 <TableRow>
                     {headers.map((header, index) => (
@@ -39,21 +50,48 @@ export default function TableContent({ headers, data, caption }: Props) {
                     ))}
                 </TableRow>
             </TableHeader>
+
             <TableBody>
-                {data.map((item, rowIndex) => (
-                    <TableRow key={String(item.id ?? rowIndex)}>
-                        {headers.map((header, columnIndex) => (
-                            <TableCell
-                                key={`${String(item.id ?? rowIndex)}-${header}`}
-                                className={
-                                    columnIndex === 0 ? 'font-medium' : undefined
-                                }
-                            >
-                                {renderCellValue(item[header])}
-                            </TableCell>
-                        ))}
+                {isLoading ? (
+                    <TableRow>
+                        <TableCell
+                            colSpan={headers.length}
+                            className="h-24 text-center"
+                        >
+                            Loading records...
+                        </TableCell>
                     </TableRow>
-                ))}
+                ) : data.length === 0 ? (
+                    <TableRow>
+                        <TableCell
+                            colSpan={headers.length}
+                            className="h-24 text-center"
+                        >
+                            No records found.
+                        </TableCell>
+                    </TableRow>
+                ) : (
+                    data.map((item, rowIndex) => {
+                        const rowKey = String(item.id ?? rowIndex);
+
+                        return (
+                            <TableRow key={rowKey}>
+                                {headers.map((header, columnIndex) => (
+                                    <TableCell
+                                        key={`${rowKey}-${header}`}
+                                        className={
+                                            columnIndex === 0
+                                                ? 'font-medium'
+                                                : undefined
+                                        }
+                                    >
+                                        {renderCellValue(item[header])}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        );
+                    })
+                )}
             </TableBody>
         </Table>
     );
