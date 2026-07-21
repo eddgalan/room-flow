@@ -13,6 +13,7 @@ type Props = {
 
 export default function UserForm({ user }: Props) {
     const form = user ? update.form(user.id) : store.form();
+    const isEditing = Boolean(user);
 
     return (
         <Form {...form}>
@@ -28,7 +29,7 @@ export default function UserForm({ user }: Props) {
                                 required
                                 autoFocus
                                 autoComplete="off"
-                                defaultValue=""
+                                defaultValue={user?.name ?? ''}
                                 tabIndex={101}
                             />
                             <InputError message={errors.name} />
@@ -41,7 +42,7 @@ export default function UserForm({ user }: Props) {
                                 name="lastname"
                                 required
                                 autoComplete="off"
-                                defaultValue=""
+                                defaultValue={user?.lastname ?? ''}
                                 tabIndex={102}
                             />
                             <InputError message={errors.lastname} />
@@ -54,7 +55,7 @@ export default function UserForm({ user }: Props) {
                                 name="username"
                                 required
                                 autoComplete="off"
-                                defaultValue=""
+                                defaultValue={user?.username ?? ''}
                                 tabIndex={103}
                             />
                             <InputError message={errors.username} />
@@ -67,7 +68,7 @@ export default function UserForm({ user }: Props) {
                                 name="email"
                                 required
                                 autoComplete="off"
-                                defaultValue=""
+                                defaultValue={user?.email ?? ''}
                                 tabIndex={104}
                             />
                             <InputError message={errors.email} />
@@ -80,7 +81,7 @@ export default function UserForm({ user }: Props) {
                                 name="phone_number"
                                 required
                                 autoComplete="off"
-                                defaultValue=""
+                                defaultValue={user?.phone_number ?? ''}
                                 tabIndex={105}
                             />
                             <InputError message={errors.phone_number} />
@@ -93,7 +94,7 @@ export default function UserForm({ user }: Props) {
                                 id="password"
                                 type="password"
                                 name="password"
-                                required
+                                required={!isEditing}
                                 tabIndex={106}
                             />
                             <InputError message={errors.password} />
@@ -106,7 +107,7 @@ export default function UserForm({ user }: Props) {
                                 id="password_confirmation"
                                 type="password"
                                 name="password_confirmation"
-                                required
+                                required={!isEditing}
                                 tabIndex={107}
                             />
                             <InputError message={errors.password_confirmation} />

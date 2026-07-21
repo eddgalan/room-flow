@@ -9,6 +9,7 @@ class UserResources implements ResourceDefinition
 {
     public const string VIEW = 'users.index';
     public const string CREATE = 'users.create';
+    public const string EDIT = 'users.edit';
 
     /**
      * @return array<string, string>
@@ -18,6 +19,7 @@ class UserResources implements ResourceDefinition
         return [
             self::VIEW => 'Show users grid.',
             self::CREATE => 'Create a new user.',
+            self::EDIT => 'Edit/Update users.',
         ];
     }
 }

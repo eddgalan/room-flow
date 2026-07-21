@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Users\UserController;
 use App\Authorization\Resources\UserResources;
+use App\Http\Controllers\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
 $adminPath = config('app.admin_path');
@@ -22,5 +22,13 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () {
         ->middlewareFor(
             'store',
             'can:'.UserResources::CREATE,
+        )
+        ->middlewareFor(
+            'edit',
+            'can:'.UserResources::EDIT,
+        )
+        ->middlewareFor(
+            'update',
+            'can:'.UserResources::EDIT,
         );
 });
