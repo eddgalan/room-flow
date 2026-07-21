@@ -18,9 +18,11 @@ export default function CreateButton({
     createRoute,
     variant = 'secondary',
 }: Props) {
+    const route = createRoute();
+
     return (
         <Button asChild className="w-full sm:w-auto" variant={variant}>
-            <Link href={createRoute()}>
+            <Link href={route.url}>
                 <Plus aria-hidden="true" className="size-4" />
                 {text}
             </Link>
