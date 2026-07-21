@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Support\Query\QueryBuilder;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -31,9 +33,16 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request): RedirectResponse
     {
-        //
+        User::create([
+            ...$request->safe()->except('password_confirmation'),
+            'enabled' => true,
+        ]);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('User created successfully.')]);
+
+        return to_route('users.index');
     }
 
     /**

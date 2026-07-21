@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import { store, update, index } from '@/routes/users';
-import type { User } from '@/types/room-flow/user'
+import { index, store, update } from '@/routes/users';
+import type { User } from '@/types/room-flow/user';
 
 type Props = {
     user?: User;
@@ -47,17 +47,17 @@ export default function UserForm({ user }: Props) {
                             <InputError message={errors.lastname} />
                         </div>
                         <div className="grid gap-2 py-2 sm:col-span-2">
-                            <Label htmlFor="user">Username</Label>
+                            <Label htmlFor="username">Username</Label>
                             <Input
-                                id="user"
+                                id="username"
                                 type="text"
-                                name="user"
+                                name="username"
                                 required
                                 autoComplete="off"
                                 defaultValue=""
                                 tabIndex={103}
                             />
-                            <InputError message={errors.user} />
+                            <InputError message={errors.username} />
                         </div>
                         <div className="grid gap-2 py-2 sm:col-span-2">
                             <Label htmlFor="email">Email</Label>
@@ -99,17 +99,17 @@ export default function UserForm({ user }: Props) {
                             <InputError message={errors.password} />
                         </div>
                         <div className="grid gap-2 py-2 sm:col-span-2">
-                            <Label htmlFor="password_confirm">
+                            <Label htmlFor="password_confirmation">
                                 Password Confirmation
                             </Label>
                             <Input
-                                id="password_confirm"
+                                id="password_confirmation"
                                 type="password"
-                                name="password_confirm"
+                                name="password_confirmation"
                                 required
                                 tabIndex={107}
                             />
-                            <InputError message={errors.password_confirm} />
+                            <InputError message={errors.password_confirmation} />
                         </div>
                     </div>
                     <div className="mt-10 flex items-center justify-end gap-2 sm:grid-cols-6">
