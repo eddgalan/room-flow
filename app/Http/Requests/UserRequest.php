@@ -38,6 +38,7 @@ class UserRequest extends FormRequest
                 Rule::unique('users', 'email')->ignore($userId),
             ],
             'phone_number' => ['nullable', 'string', 'min:10', 'max:20'],
+            'enabled' => ['sometimes', 'boolean'],
             'password' => $passwordRules,
         ];
     }

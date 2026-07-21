@@ -1,6 +1,8 @@
 import { Form, Link } from '@inertiajs/react';
+import { useState } from 'react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
@@ -14,12 +16,34 @@ type Props = {
 export default function UserForm({ user }: Props) {
     const form = user ? update.form(user.id) : store.form();
     const isEditing = Boolean(user);
+    const isAdmin = Boolean(user?.username?.toLowerCase() === 'admin');
+    const [isActive, setIsActive] = useState(Boolean(user?.enabled));
 
     return (
         <Form {...form}>
             {({ errors, processing }) => (
                 <>
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-b pb-2 sm:grid-cols-6">
+                        <div className="sm:col-span-6">
+                            <h1>User information</h1>
+                        </div>
+                        {isEditing && (
+                            <div className="flex gap-2 py-2 sm:col-span-6">
+                                <input
+                                    type="hidden"
+                                    name="enabled"
+                                    value={isActive ? '1' : '0'}
+                                />
+                                <Checkbox
+                                    id="enabled"
+                                    checked={isActive}
+                                    onCheckedChange={(checked) =>
+                                        setIsActive(checked === true)
+                                    }
+                                />
+                                <Label htmlFor="enabled">Active</Label>
+                            </div>
+                        )}
                         <div className="grid gap-2 py-2 sm:col-span-2">
                             <Label htmlFor="name">Name</Label>
                             <Input
@@ -88,8 +112,19 @@ export default function UserForm({ user }: Props) {
                         </div>
                     </div>
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-b pb-2 sm:grid-cols-6">
+                        <div className="sm:col-span-6">
+                            {user ? (
+                                <h1>Change password</h1>
+                            ) : (
+                                <h1>Password</h1>
+                            )}
+                        </div>
                         <div className="grid gap-2 py-2 sm:col-span-2">
-                            <Label htmlFor="password">Password</Label>
+                            {isEditing ? (
+                                <Label htmlFor="password">New Password</Label>
+                            ) : (
+                                <Label htmlFor="password">Password</Label>
+                            )}
                             <Input
                                 id="password"
                                 type="password"
@@ -101,7 +136,7 @@ export default function UserForm({ user }: Props) {
                         </div>
                         <div className="grid gap-2 py-2 sm:col-span-2">
                             <Label htmlFor="password_confirmation">
-                                Password Confirmation
+                                Confirm Password
                             </Label>
                             <Input
                                 id="password_confirmation"
@@ -110,7 +145,9 @@ export default function UserForm({ user }: Props) {
                                 required={!isEditing}
                                 tabIndex={107}
                             />
-                            <InputError message={errors.password_confirmation} />
+                            <InputError
+                                message={errors.password_confirmation}
+                            />
                         </div>
                     </div>
                     <div className="mt-10 flex items-center justify-end gap-2 sm:grid-cols-6">
@@ -131,7 +168,7 @@ export default function UserForm({ user }: Props) {
                             type="submit"
                             className="w-full sm:w-auto"
                             variant="default"
-                            disabled={processing}
+                            disabled={processing || isAdmin}
                             tabIndex={108}
                         >
                             {processing && <Spinner />}Save
