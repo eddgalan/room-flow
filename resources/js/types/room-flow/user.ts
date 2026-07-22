@@ -9,3 +9,8 @@ export interface User {
     created_at: string;
     updated_at: string;
 }
+
+export interface UserForm extends User {
+    role_id: number | null;
+    role_name: string | null;
+}

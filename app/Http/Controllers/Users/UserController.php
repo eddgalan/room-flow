@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -56,9 +57,33 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): Response
     {
-        return Inertia::render('users/edit', compact('user'));
+        $roles = Role::where('guard_name', 'web')->get()->toArray();
+        $user = User::query()
+            ->select([
+                'users.id',
+                'users.name',
+                'users.lastname',
+                'users.username',
+                'users.enabled',
+                'users.email',
+                'users.phone_number',
+                'users.created_at',
+                'users.updated_at',
+                'roles.id as role_id',
+                'roles.name as role_name',
+            ])
+            ->leftJoin('model_has_roles', function ($join): void {
+                $join
+                    ->on('users.id', '=', 'model_has_roles.model_id')
+                    ->where('model_has_roles.model_type', User::class);
+            })
+            ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->where('users.id', $user->id)
+            ->firstOrFail();
+
+        return Inertia::render('users/edit', compact('user', 'roles'));
     }
 
     /**
@@ -67,12 +92,18 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user): RedirectResponse
     {
         $data = $request->safe()->except('password_confirmation');
+        $roleId = $data['role_id'] ?? null;
+        unset($data['role_id']);
 
         if (blank($data['password'] ?? null)) {
             unset($data['password']);
         }
 
         $user->update($data);
+
+        if ($roleId) {
+            $user->syncRoles([(int) $roleId]);
+        }
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('User updated successfully.')]);
 

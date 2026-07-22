@@ -39,6 +39,7 @@ class UserRequest extends FormRequest
             ],
             'phone_number' => ['nullable', 'string', 'min:10', 'max:20'],
             'enabled' => ['sometimes', 'boolean'],
+            'role_id' => ['integer', Rule::exists('roles', 'id')],
             'password' => $passwordRules,
         ];
     }

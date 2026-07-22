@@ -3,21 +3,44 @@ import { useState } from 'react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+    Combobox,
+    ComboboxContent,
+    ComboboxEmpty,
+    ComboboxInput,
+    ComboboxItem,
+    ComboboxList,
+} from '@/components/ui/combobox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { index, store, update } from '@/routes/users';
-import type { User } from '@/types/room-flow/user';
+import type { Role } from '@/types/room-flow/role';
+import type { UserForm } from '@/types/room-flow/user';
 
-type Props = {
-    user?: User;
+type RoleOption = {
+    value: string;
+    label: string;
 };
 
-export default function UserForm({ user }: Props) {
+type Props = {
+    user?: UserForm;
+    roles?: Role[];
+};
+
+export default function UserForm({ user, roles }: Props) {
     const form = user ? update.form(user.id) : store.form();
     const isEditing = Boolean(user);
-    const isAdmin = Boolean(user?.username?.toLowerCase() === 'admin');
     const [isActive, setIsActive] = useState(Boolean(user?.enabled));
+    const roleOptions =
+        roles?.map((role) => ({
+            value: String(role.id),
+            label: role.name,
+        })) ?? [];
+    const [selectedRole, setSelectedRole] = useState<RoleOption | null>(
+        roleOptions.find((role) => role.value === String(user?.role_id)) ??
+            null,
+    );
 
     return (
         <Form {...form}>
@@ -83,6 +106,36 @@ export default function UserForm({ user }: Props) {
                                 tabIndex={103}
                             />
                             <InputError message={errors.username} />
+                        </div>
+                        <div className="grid gap-2 py-2 sm:col-span-2">
+                            <Label htmlFor="role">Role</Label>
+                            <input
+                                type="hidden"
+                                name="role_id"
+                                value={selectedRole?.value ?? ''}
+                            />
+                            <Combobox
+                                items={roleOptions}
+                                value={selectedRole}
+                                onValueChange={setSelectedRole}
+                            >
+                                <ComboboxInput placeholder="Select a user role" />
+                                <ComboboxContent>
+                                    <ComboboxEmpty>
+                                        No items found.
+                                    </ComboboxEmpty>
+                                    <ComboboxList>
+                                        {(item) => (
+                                            <ComboboxItem
+                                                key={item.value}
+                                                value={item}
+                                            >
+                                                {item.label}
+                                            </ComboboxItem>
+                                        )}
+                                    </ComboboxList>
+                                </ComboboxContent>
+                            </Combobox>
                         </div>
                         <div className="grid gap-2 py-2 sm:col-span-2">
                             <Label htmlFor="email">Email</Label>
@@ -168,7 +221,7 @@ export default function UserForm({ user }: Props) {
                             type="submit"
                             className="w-full sm:w-auto"
                             variant="default"
-                            disabled={processing || isAdmin}
+                            disabled={processing}
                             tabIndex={108}
                         >
                             {processing && <Spinner />}Save
