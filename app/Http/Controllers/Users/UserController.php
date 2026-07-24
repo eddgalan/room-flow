@@ -9,6 +9,7 @@ use App\Support\Query\QueryBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\Permission\Models\Role;
@@ -38,10 +39,18 @@ class UserController extends Controller
      */
     public function store(UserRequest $request): RedirectResponse
     {
-        User::create([
-            ...$request->safe()->except('password_confirmation'),
-            'enabled' => true,
-        ]);
+        $data = $request->safe()->except('password_confirmation');
+        $roleId = $data['role_id'];
+        unset($data['role_id']);
+
+        DB::transaction(function () use ($data, $roleId): void {
+            $user = User::create([
+                ...$data,
+                'enabled' => true,
+            ]);
+
+            $user->syncRoles([(int) $roleId]);
+        });
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('User created successfully.')]);
 

@@ -136,6 +136,7 @@ export default function UserForm({ user, roles }: Props) {
                                     </ComboboxList>
                                 </ComboboxContent>
                             </Combobox>
+                            <InputError message={errors.role_id} />
                         </div>
                         <div className="grid gap-2 py-2 sm:col-span-2">
                             <Label htmlFor="email">Email</Label>
