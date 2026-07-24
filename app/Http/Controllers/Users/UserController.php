@@ -28,7 +28,9 @@ class UserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('users/create');
+        $roles = Role::where('guard_name', 'web')->get()->toArray();
+
+        return Inertia::render('users/create', compact('roles'));
     }
 
     /**
@@ -44,14 +46,6 @@ class UserController extends Controller
         Inertia::flash('toast', ['type' => 'success', 'message' => __('User created successfully.')]);
 
         return to_route('users.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
     }
 
     /**
@@ -113,9 +107,20 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
-        //
+        if ($user->username === 'admin') {
+            Inertia::flash('toast', ['type' => 'error', 'message' => __('The administrator user cannot be deleted.')]);
+
+            return back();
+        }
+
+        $user->syncRoles([]);
+        $user->delete();
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('User deleted successfully.')]);
+
+        return to_route('users.index');
     }
 
     /**

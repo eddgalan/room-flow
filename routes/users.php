@@ -30,5 +30,9 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () {
         ->middlewareFor(
             'update',
             'can:'.UserResources::EDIT,
+        )
+        ->middlewareFor(
+            'destroy',
+            'can:'.UserResources::DELETE,
         );
 });

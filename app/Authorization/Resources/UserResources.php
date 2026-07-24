@@ -8,8 +8,12 @@ namespace App\Authorization\Resources;
 class UserResources implements ResourceDefinition
 {
     public const string VIEW = 'users.index';
+
     public const string CREATE = 'users.create';
+
     public const string EDIT = 'users.edit';
+
+    public const string DELETE = 'users.delete';
 
     /**
      * @return array<string, string>
@@ -20,6 +24,7 @@ class UserResources implements ResourceDefinition
             self::VIEW => 'Show users grid.',
             self::CREATE => 'Create a new user.',
             self::EDIT => 'Edit/Update users.',
+            self::DELETE => 'Delete users.',
         ];
     }
 }

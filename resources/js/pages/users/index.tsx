@@ -26,6 +26,11 @@ const actions: Actions<UserRow> = [
         action: 'Delete',
         actionPath: destroy,
         variant: 'destructive',
+        confirm: true,
+        confirmTitle: 'Delete user',
+        confirmMessage: (user) =>
+            `Are you sure you want to delete ${user.name} ${user.lastname}? This action cannot be undone.`,
+        confirmButtonText: 'Delete',
     },
 ];
 

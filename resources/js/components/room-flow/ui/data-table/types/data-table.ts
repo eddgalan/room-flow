@@ -28,6 +28,11 @@ export type Action<T extends object> = {
     action: string;
     actionPath: (row: T) => string | RouteDefinition<DataTableActionMethod>;
     variant?: 'default' | 'destructive';
+    confirm?: boolean;
+    confirmTitle?: string;
+    confirmMessage?: string | ((row: T) => string);
+    confirmButtonText?: string;
+    cancelButtonText?: string;
 };
 
 export type Actions<T extends object> = Action<T>[];
