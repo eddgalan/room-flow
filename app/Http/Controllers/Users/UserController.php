@@ -109,6 +109,7 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
+        // ToDo: Validate that the User has no operations in the System.
         if ($user->username === 'admin') {
             Inertia::flash('toast', ['type' => 'error', 'message' => __('The administrator user cannot be deleted.')]);
 
@@ -129,11 +130,6 @@ class UserController extends Controller
      * This function applies query modifications based on the provided
      * request parameters and query builder, fetches paginated results,
      * and formats them into a JSON response including metadata and pagination links.
-     *
-     * @param Request $request
-     * @param QueryBuilder $queryBuilder
-     *
-     * @return JsonResponse
      */
     public function dataTable(
         Request $request,
