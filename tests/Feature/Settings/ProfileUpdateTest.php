@@ -29,7 +29,9 @@ class ProfileUpdateTest extends TestCase
             ->actingAs($user)
             ->patch(route('profile.update'), [
                 'name' => 'Test User',
+                'lastname' => 'Profile',
                 'email' => 'test@example.com',
+                'phone_number' => '5512345678',
             ]);
 
         $response
@@ -39,7 +41,9 @@ class ProfileUpdateTest extends TestCase
         $user->refresh();
 
         $this->assertSame('Test User', $user->name);
+        $this->assertSame('Profile', $user->lastname);
         $this->assertSame('test@example.com', $user->email);
+        $this->assertSame('5512345678', $user->phone_number);
         $this->assertNull($user->email_verified_at);
     }
 
@@ -51,7 +55,9 @@ class ProfileUpdateTest extends TestCase
             ->actingAs($user)
             ->patch(route('profile.update'), [
                 'name' => 'Test User',
+                'lastname' => $user->lastname,
                 'email' => $user->email,
+                'phone_number' => $user->phone_number,
             ]);
 
         $response
