@@ -1,14 +1,19 @@
 import { Head } from '@inertiajs/react';
 import UserForm from '@/components/room-flow/user/user-form';
 import { index, create } from '@/routes/users';
+import type {Role} from '@/types/room-flow/role';
 
-export default function Create() {
+type Props = {
+    roles: Role[];
+}
+
+export default function Create({ roles }: Props) {
     return (
         <>
             <Head title="Create User" />
 
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <UserForm />
+                <UserForm roles={roles} />
             </div>
         </>
     );
