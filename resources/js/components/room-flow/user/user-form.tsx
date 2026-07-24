@@ -119,7 +119,7 @@ export default function UserForm({ user, roles }: Props) {
                                 value={selectedRole}
                                 onValueChange={setSelectedRole}
                             >
-                                <ComboboxInput placeholder="Select a user role" />
+                                <ComboboxInput placeholder="Select a user role" tabIndex={104} />
                                 <ComboboxContent>
                                     <ComboboxEmpty>
                                         No items found.
@@ -146,7 +146,7 @@ export default function UserForm({ user, roles }: Props) {
                                 required
                                 autoComplete="off"
                                 defaultValue={user?.email ?? ''}
-                                tabIndex={104}
+                                tabIndex={105}
                             />
                             <InputError message={errors.email} />
                         </div>
@@ -159,7 +159,7 @@ export default function UserForm({ user, roles }: Props) {
                                 required
                                 autoComplete="off"
                                 defaultValue={user?.phone_number ?? ''}
-                                tabIndex={105}
+                                tabIndex={106}
                             />
                             <InputError message={errors.phone_number} />
                         </div>
@@ -183,7 +183,7 @@ export default function UserForm({ user, roles }: Props) {
                                 type="password"
                                 name="password"
                                 required={!isEditing}
-                                tabIndex={106}
+                                tabIndex={107}
                             />
                             <InputError message={errors.password} />
                         </div>
@@ -196,7 +196,7 @@ export default function UserForm({ user, roles }: Props) {
                                 type="password"
                                 name="password_confirmation"
                                 required={!isEditing}
-                                tabIndex={107}
+                                tabIndex={108}
                             />
                             <InputError
                                 message={errors.password_confirmation}
@@ -208,7 +208,7 @@ export default function UserForm({ user, roles }: Props) {
                             type="button"
                             className="p-0"
                             variant="outline"
-                            tabIndex={109}
+                            tabIndex={110}
                         >
                             <Link
                                 href={index()}
@@ -222,7 +222,7 @@ export default function UserForm({ user, roles }: Props) {
                             className="w-full sm:w-auto"
                             variant="default"
                             disabled={processing}
-                            tabIndex={108}
+                            tabIndex={109}
                         >
                             {processing && <Spinner />}Save
                         </Button>
