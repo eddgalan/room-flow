@@ -1,11 +1,11 @@
 import { Head } from '@inertiajs/react';
 import UserForm from '@/components/room-flow/user/user-form';
-import { index, create } from '@/routes/users';
-import type {Role} from '@/types/room-flow/role';
+import { create, index } from '@/routes/users';
+import type { Role } from '@/types/room-flow/role';
 
 type Props = {
     roles: Role[];
-}
+};
 
 export default function Create({ roles }: Props) {
     return (
