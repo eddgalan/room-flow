@@ -12,3 +12,11 @@ export type NavItem = {
     icon?: LucideIcon | null;
     isActive?: boolean;
 };
+
+export type ServerNavItem = Omit<NavItem, 'icon'> & {
+    icon?: string | null;
+};
+
+export type Navigation = {
+    main: ServerNavItem[];
+};
