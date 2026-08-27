@@ -3,6 +3,7 @@
 namespace App\Support\Navigation;
 
 use App\Authorization\Resources\DashboardResources;
+use App\Authorization\Resources\RoomResources;
 use App\Authorization\Resources\UserResources;
 use App\Models\User;
 
@@ -69,6 +70,13 @@ class SidebarNavigation
                 'href' => route('users.index'),
                 'icon' => 'users',
                 'order' => 20,
+            ],
+            [
+                'title' => 'Rooms',
+                'permission' => RoomResources::LIST,
+                'href' => route('rooms.index'),
+                'icon' => 'bed',
+                'order' => 30,
             ],
         ];
     }

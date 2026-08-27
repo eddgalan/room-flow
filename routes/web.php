@@ -13,3 +13,4 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () use ($adminPa
 
 require __DIR__.'/settings.php';
 require __DIR__.'/users.php';
+require __DIR__.'/rooms.php';

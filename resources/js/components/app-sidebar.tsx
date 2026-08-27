@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid, Users } from 'lucide-react';
+import { BookOpen, FolderGit2, LayoutGrid, Users, Bed } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -19,6 +19,7 @@ import type { NavItem } from '@/types';
 
 const sidebarIcons: Record<string, LucideIcon> = {
     'layout-grid': LayoutGrid,
+    bed: Bed,
     users: Users,
 };
 
