@@ -1,7 +1,4 @@
 import { Head } from '@inertiajs/react';
-import ActionsBar from '@/components/room-flow/ui/actions-bar';
-import RedirectButton from '@/components/room-flow/ui/redirect-button';
-import { index } from '@/routes/rooms/types';
 
 export default function Index() {
     return (
@@ -9,9 +6,7 @@ export default function Index() {
             <Head title="Rooms" />
 
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <ActionsBar>
-                    <RedirectButton text="Room Types" redirectTo={index} />
-                </ActionsBar>
+                <h1>Room Types</h1>
             </div>
         </>
     );
@@ -22,6 +17,10 @@ Index.layout = {
         {
             title: 'Rooms',
             href: '/admin/rooms',
+        },
+        {
+            title: 'Room Types',
+            href: '/admin/rooms/types',
         },
     ],
 };
