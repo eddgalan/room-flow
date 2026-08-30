@@ -1,12 +1,18 @@
 import { Head } from '@inertiajs/react';
+import ActionsBar from '@/components/room-flow/ui/actions-bar';
+import CreateButton from '@/components/room-flow/ui/create-button';
+import { index as roomsIndex } from '@/routes/rooms';
+import { index, create } from '@/routes/types';
 
 export default function Index() {
     return (
         <>
-            <Head title="Rooms" />
+            <Head title="Room Types" />
 
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <h1>Room Types</h1>
+                <ActionsBar>
+                    <CreateButton text="Create Room Type" createRoute={create} />
+                </ActionsBar>
             </div>
         </>
     );
@@ -16,11 +22,11 @@ Index.layout = {
     breadcrumbs: [
         {
             title: 'Rooms',
-            href: '/admin/rooms',
+            href: roomsIndex().url,
         },
         {
             title: 'Room Types',
-            href: '/admin/rooms/types',
+            href: index().url,
         },
     ],
 };
