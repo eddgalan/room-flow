@@ -25,7 +25,7 @@ export type DataTableParams = {
 type DataTableActionMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 export type Action<T extends object> = {
-    action: string;
+    action: string | ((row: T) => string);
     actionPath: (row: T) => string | RouteDefinition<DataTableActionMethod>;
     variant?: 'default' | 'destructive';
     confirm?: boolean;

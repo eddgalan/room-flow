@@ -10,6 +10,8 @@ class RoomTypeResources implements ResourceDefinition
 
     public const string EDIT = 'rooms.types.edit';
 
+    public const string TOGGLE_ENABLED = 'rooms.types.enabled';
+
     /**
      * @return array|string[]
      */
@@ -19,6 +21,7 @@ class RoomTypeResources implements ResourceDefinition
             self::LIST => 'Show room types list (grid).',
             self::CREATE => 'Create a new room type.',
             self::EDIT => 'Edit a room type.',
+            self::TOGGLE_ENABLED => 'Enabled/Disabled room type.',
         ];
     }
 }

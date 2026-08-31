@@ -5,7 +5,7 @@ import DataTable from '@/components/room-flow/ui/data-table';
 import type { Actions } from '@/components/room-flow/ui/data-table/types/data-table';
 import { useCan } from '@/hooks/use-can';
 import { index as roomsIndex } from '@/routes/rooms';
-import { list } from '@/routes/rooms/types'
+import { list, toggleEnabled } from '@/routes/rooms/types';
 import { index, create, edit } from '@/routes/types';
 
 type RoomTypeRow = {
@@ -32,6 +32,10 @@ const actions: Actions<RoomTypeRow> = [
     {
         action: 'Edit',
         actionPath: (type) => edit(type.id),
+    },
+    {
+        action: (type) => (type.enabled ? 'Disable' : 'Enable'),
+        actionPath: (type) => toggleEnabled(type.id),
     },
 ];
 

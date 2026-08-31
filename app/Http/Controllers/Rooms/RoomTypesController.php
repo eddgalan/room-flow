@@ -127,4 +127,21 @@ class RoomTypesController extends Controller
 
         return to_route('types.index');
     }
+
+    /**
+     * Toggle the enabled status of the specified resource.
+     */
+    public function toggleEnabled(RoomType $type): RedirectResponse
+    {
+        try {
+            $type->enabled = ! $type->enabled;
+            $type->save();
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('Room Type enabled successfully.')]);
+        } catch (\Throwable $exception) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => $exception->getMessage()]);
+        }
+
+        return to_route('types.index');
+    }
 }

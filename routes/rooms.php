@@ -39,4 +39,8 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () {
             'update',
             'can:'.RoomTypeResources::EDIT,
         );
+
+    Route::get('rooms/types/{type}/toggle-enabled', [RoomTypesController::class, 'toggleEnabled'])
+        ->name('rooms.types.toggleEnabled')
+        ->middleware('can:'.RoomTypeResources::TOGGLE_ENABLED);
 });

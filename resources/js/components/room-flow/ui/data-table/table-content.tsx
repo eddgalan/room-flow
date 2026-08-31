@@ -75,6 +75,15 @@ function resolveActionPath<T extends Record<string, unknown>>(
     };
 }
 
+function resolveActionLabel<T extends Record<string, unknown>>(
+    action: Actions<T>[number],
+    row: T,
+): string {
+    return typeof action.action === 'function'
+        ? action.action(row)
+        : action.action;
+}
+
 export default function TableContent<T extends Record<string, unknown>>({
     headers,
     data,
@@ -91,6 +100,9 @@ export default function TableContent<T extends Record<string, unknown>>({
         typeof pendingAction?.action.confirmMessage === 'function'
             ? pendingAction.action.confirmMessage(pendingAction.row)
             : pendingAction?.action.confirmMessage;
+    const pendingActionLabel = pendingAction
+        ? resolveActionLabel(pendingAction.action, pendingAction.row)
+        : null;
 
     const handleConfirmAction = () => {
         if (!pendingAction) {
@@ -180,6 +192,11 @@ export default function TableContent<T extends Record<string, unknown>>({
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
                                                     {actions?.map((action) => {
+                                                        const actionLabel =
+                                                            resolveActionLabel(
+                                                                action,
+                                                                item,
+                                                            );
                                                         const { href, method } =
                                                             resolveActionPath(
                                                                 action,
@@ -189,7 +206,7 @@ export default function TableContent<T extends Record<string, unknown>>({
                                                         if (action.confirm) {
                                                             return (
                                                                 <DropdownMenuItem
-                                                                    key={`${rowKey}-${action.action}`}
+                                                                    key={`${rowKey}-${actionLabel}`}
                                                                     variant={
                                                                         action.variant
                                                                     }
@@ -204,16 +221,14 @@ export default function TableContent<T extends Record<string, unknown>>({
                                                                         )
                                                                     }
                                                                 >
-                                                                    {
-                                                                        action.action
-                                                                    }
+                                                                    {actionLabel}
                                                                 </DropdownMenuItem>
                                                             );
                                                         }
 
                                                         return (
                                                             <DropdownMenuItem
-                                                                key={`${rowKey}-${action.action}`}
+                                                                key={`${rowKey}-${actionLabel}`}
                                                                 asChild
                                                                 variant={
                                                                     action.variant
@@ -232,9 +247,7 @@ export default function TableContent<T extends Record<string, unknown>>({
                                                                     }
                                                                     className="w-full cursor-pointer"
                                                                 >
-                                                                    {
-                                                                        action.action
-                                                                    }
+                                                                    {actionLabel}
                                                                 </Link>
                                                             </DropdownMenuItem>
                                                         );
@@ -262,7 +275,7 @@ export default function TableContent<T extends Record<string, unknown>>({
                     <DialogHeader>
                         <DialogTitle>
                             {pendingAction?.action.confirmTitle ??
-                                `Confirm ${pendingAction?.action.action ?? 'action'}`}
+                                `Confirm ${pendingActionLabel ?? 'action'}`}
                         </DialogTitle>
                         <DialogDescription>
                             {confirmMessage ??
@@ -286,7 +299,7 @@ export default function TableContent<T extends Record<string, unknown>>({
                             onClick={handleConfirmAction}
                         >
                             {pendingAction?.action.confirmButtonText ??
-                                pendingAction?.action.action ??
+                                pendingActionLabel ??
                                 'Confirm'}
                         </Button>
                     </DialogFooter>
