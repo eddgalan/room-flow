@@ -1,9 +1,39 @@
 import { Head } from '@inertiajs/react';
 import ActionsBar from '@/components/room-flow/ui/actions-bar';
 import CreateButton from '@/components/room-flow/ui/create-button';
+import DataTable from '@/components/room-flow/ui/data-table';
+import type { Actions } from '@/components/room-flow/ui/data-table/types/data-table';
 import { useCan } from '@/hooks/use-can';
 import { index as roomsIndex } from '@/routes/rooms';
-import { index, create } from '@/routes/types';
+import { list } from '@/routes/rooms/types'
+import { index, create, edit } from '@/routes/types';
+
+type RoomTypeRow = {
+    id: number;
+    name: string;
+    description: string;
+    capacity: number;
+    enabled: boolean;
+    created_at: string;
+    updated_at: string;
+};
+
+const headers: Array<keyof RoomTypeRow> = [
+    'id',
+    'name',
+    'description',
+    'capacity',
+    'enabled',
+    'created_at',
+    'updated_at',
+];
+
+const actions: Actions<RoomTypeRow> = [
+    {
+        action: 'Edit',
+        actionPath: (type) => edit(type.id),
+    },
+];
 
 export default function Index() {
     const { can } = useCan();
@@ -21,6 +51,12 @@ export default function Index() {
                         />
                     )}
                 </ActionsBar>
+                <DataTable<RoomTypeRow>
+                    endpoint={list.url()}
+                    headers={headers}
+                    caption="Room Types list"
+                    actions={actions}
+                />
             </div>
         </>
     );

@@ -13,7 +13,12 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () {
         ->name('rooms.index')
         ->middleware('can:'.RoomResources::LIST);
 
+    Route::get('rooms/types/list', [RoomTypesController::class, 'list'])
+        ->name('rooms.types.list')
+        ->middleware('can:'.RoomTypeResources::LIST);
+
     Route::resource('rooms/types', RoomTypesController::class)
+        ->except(['show'])
         ->middlewareFor(
             'index',
             'can:'.RoomTypeResources::LIST,

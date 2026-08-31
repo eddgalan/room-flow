@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Rooms;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoomTypeRequest;
 use App\Models\Rooms\RoomType;
+use App\Support\Query\QueryBuilder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -52,5 +55,54 @@ class RoomTypesController extends Controller
         }
 
         return to_route('types.index');
+    }
+
+    /**
+     * Generate a paginated data table response for users.
+     *
+     * This function applies query modifications based on the provided
+     * request parameters and query builder, fetches paginated results,
+     * and formats them into a JSON response including metadata and pagination links.
+     */
+    public function list(
+        Request $request,
+        QueryBuilder $queryBuilder
+    ): JsonResponse {
+        $roomTypeModel = new RoomType;
+        $query = $queryBuilder->apply(
+            query: RoomType::query(),
+            model: $roomTypeModel,
+            parameters: $request->all(),
+        );
+
+        $roomTypes = $query->paginate(
+            perPage: $request->integer('per_page', 15),
+        )->withQueryString();
+
+        return response()->json([
+            'data' => $roomTypes->through(fn (RoomType $roomType) => [
+                'id' => $roomType->id,
+                'name' => $roomType->name,
+                'description' => $roomType->description,
+                'capacity' => $roomType->capacity,
+                'enabled' => $roomType->enabled,
+                'created_at' => $roomType->created_at?->toDateTimeString(),
+                'updated_at' => $roomType->updated_at?->toDateTimeString(),
+            ])->items(),
+            'meta' => [
+                'current_page' => $roomTypes->currentPage(),
+                'from' => $roomTypes->firstItem(),
+                'last_page' => $roomTypes->lastPage(),
+                'per_page' => $roomTypes->perPage(),
+                'to' => $roomTypes->lastItem(),
+                'total' => $roomTypes->total(),
+            ],
+            'links' => [
+                'first' => $roomTypes->url(1),
+                'last' => $roomTypes->url($roomTypes->lastPage()),
+                'prev' => $roomTypes->previousPageUrl(),
+                'next' => $roomTypes->nextPageUrl(),
+            ],
+        ]);
     }
 }
