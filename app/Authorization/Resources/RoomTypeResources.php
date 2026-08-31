@@ -6,6 +6,8 @@ class RoomTypeResources implements ResourceDefinition
 {
     public const string LIST = 'rooms.types.index';
 
+    public const string CREATE = 'rooms.types.create';
+
     /**
      * @return array|string[]
      */
@@ -13,6 +15,7 @@ class RoomTypeResources implements ResourceDefinition
     {
         return [
             self::LIST => 'Show room types list (grid).',
+            self::CREATE => 'Create a new room type.',
         ];
     }
 }

@@ -17,5 +17,13 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () {
         ->middlewareFor(
             'index',
             'can:'.RoomTypeResources::LIST,
+        )
+        ->middlewareFor(
+            'create',
+            'can:'.RoomTypeResources::CREATE,
+        )
+        ->middlewareFor(
+            'store',
+            'can:'.RoomTypeResources::CREATE,
         );
 });

@@ -7,6 +7,12 @@ export const permissions = {
         roles: {
             view: 'settings.roles.view',
         },
+        rooms: {
+            type: {
+                list: 'rooms.types.index',
+                create: 'rooms.types.create',
+            },
+        },
         security: 'settings.security',
         appearance: 'settings.appearance',
     },
