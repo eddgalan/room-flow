@@ -105,4 +105,26 @@ class RoomTypesController extends Controller
             ],
         ]);
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(RoomType $type): Response
+    {
+        return Inertia::render('rooms/types/edit', [
+            'roomType' => $type,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(RoomTypeRequest $request, RoomType $type): RedirectResponse
+    {
+        $type->update($request->safe()->all());
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Room Type updated successfully.')]);
+
+        return to_route('types.index');
+    }
 }
