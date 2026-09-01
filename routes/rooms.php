@@ -12,4 +12,5 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () {
         ->middleware('can:'.RoomResources::LIST);
 });
 
+require __DIR__.'/rooms_rates.php';
 require __DIR__.'/rooms_types.php';
