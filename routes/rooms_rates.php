@@ -16,6 +16,14 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () {
         ->middlewareFor(
             'create',
             'can:'.RoomRateResources::CREATE
+        )
+        ->middlewareFor(
+            'edit',
+            'can:'.RoomRateResources::EDIT
+        )
+        ->middlewareFor(
+            'update',
+            'can:'.RoomRateResources::EDIT
         );
 
     Route::get('rooms/rates/list', [RoomRatesController::class, 'list'])

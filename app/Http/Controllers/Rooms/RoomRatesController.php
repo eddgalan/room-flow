@@ -108,4 +108,26 @@ class RoomRatesController extends Controller
             ],
         ]);
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(RoomRate $rate): Response
+    {
+        return Inertia::render('rooms/rates/edit', [
+            'roomRate' => $rate,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(RoomRateRequest $request, RoomRate $rate): RedirectResponse
+    {
+        $rate->update($request->safe()->all());
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Room Rate updated successfully.')]);
+
+        return to_route('rates.index');
+    }
 }

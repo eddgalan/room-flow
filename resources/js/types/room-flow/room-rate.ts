@@ -3,7 +3,7 @@ export interface RoomRate {
     name: string;
     description: string;
     duration: number;
-    duration_unit: number;
+    duration_unit: string;
     enabled: boolean;
     allow_multiple: boolean;
     uses_checkin_schedule: boolean;

@@ -25,6 +25,8 @@ class RoomRateRequest extends FormRequest
             'duration' => ['integer', 'min:0'],
             'duration_unit' => ['required_with:duration', 'string', 'max:50'],
             'enabled' => ['sometimes', 'boolean'],
+            'allow_multiple' => ['sometimes', 'boolean'],
+            'uses_checkin_schedule' => ['sometimes', 'boolean'],
         ];
     }
 }

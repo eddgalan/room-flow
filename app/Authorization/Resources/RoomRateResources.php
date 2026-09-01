@@ -8,6 +8,8 @@ class RoomRateResources implements ResourceDefinition
 
     public const string CREATE = 'rooms.rates.create';
 
+    public const string EDIT = 'rooms.rates.edit';
+
     /**
      * @return string[]
      */
@@ -16,6 +18,7 @@ class RoomRateResources implements ResourceDefinition
         return [
             self::LIST => 'List all room rates',
             self::CREATE => 'Create a room rate',
+            self::EDIT => 'Edit Form and Update a room rate',
         ];
     }
 }
