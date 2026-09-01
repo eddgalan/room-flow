@@ -58,7 +58,7 @@ class RoomTypesController extends Controller
     }
 
     /**
-     * Generate a paginated data table response for users.
+     * Generate a paginated data table response for Room Types.
      *
      * This function applies query modifications based on the provided
      * request parameters and query builder, fetches paginated results,
