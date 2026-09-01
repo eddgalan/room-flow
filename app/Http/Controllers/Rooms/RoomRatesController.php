@@ -130,4 +130,21 @@ class RoomRatesController extends Controller
 
         return to_route('rates.index');
     }
+
+    /**
+     * Toggle the enabled status of the specified resource.
+     */
+    public function toggleEnabled(RoomRate $rate): RedirectResponse
+    {
+        try {
+            $rate->enabled = ! $rate->enabled;
+            $rate->save();
+
+            Inertia::flash('toast', ['type' => 'success', 'message' => __('Room Rate enabled successfully.')]);
+        } catch (\Throwable $exception) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => $exception->getMessage()]);
+        }
+
+        return to_route('rates.index');
+    }
 }

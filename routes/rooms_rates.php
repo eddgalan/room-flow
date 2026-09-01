@@ -29,4 +29,8 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () {
     Route::get('rooms/rates/list', [RoomRatesController::class, 'list'])
         ->name('rooms.rates.list')
         ->middleware('can:'.RoomRateResources::LIST);
+
+    Route::get('rooms/rates/{rate}/toggle-enabled', [RoomRatesController::class, 'toggleEnabled'])
+        ->name('rooms.rates.toggleEnabled')
+        ->middleware('can:'.RoomRateResources::TOGGLE_ENABLED);
 });

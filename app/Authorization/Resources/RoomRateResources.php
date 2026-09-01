@@ -10,6 +10,8 @@ class RoomRateResources implements ResourceDefinition
 
     public const string EDIT = 'rooms.rates.edit';
 
+    public const string TOGGLE_ENABLED = 'rooms.rates.enabled';
+
     /**
      * @return string[]
      */
@@ -19,6 +21,7 @@ class RoomRateResources implements ResourceDefinition
             self::LIST => 'List all room rates',
             self::CREATE => 'Create a room rate',
             self::EDIT => 'Edit Form and Update a room rate',
+            self::TOGGLE_ENABLED => 'Enabled/Disabled room rate.',
         ];
     }
 }

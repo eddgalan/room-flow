@@ -5,8 +5,8 @@ import DataTable from '@/components/room-flow/ui/data-table';
 import type { Actions } from '@/components/room-flow/ui/data-table/types/data-table';
 import { useCan } from '@/hooks/use-can';
 import { create, edit, index } from '@/routes/rates';
-import { index as roomsIndex} from '@/routes/rooms';
-import { list } from '@/routes/rooms/rates';
+import { index as roomsIndex } from '@/routes/rooms';
+import { list, toggleEnabled } from '@/routes/rooms/rates';
 
 type RoomRateRow = {
     id: number;
@@ -34,15 +34,23 @@ const headers: Array<keyof RoomRateRow> = [
     'updated_at',
 ];
 
-const actions: Actions<RoomRateRow> = [
-    {
-        action: 'Edit',
-        actionPath: (type) => edit(type.id),
-    },
-];
-
 export default function Index() {
     const { can } = useCan();
+    const actions: Actions<RoomRateRow> = [];
+
+    if (can('rooms.rates.edit')) {
+        actions.push({
+            action: 'Edit',
+            actionPath: (rate) => edit(rate.id),
+        });
+    }
+
+    if (can('rooms.rates.enabled')) {
+        actions.push({
+            action: (rate) => (rate.enabled ? 'Disable' : 'Enable'),
+            actionPath: (rate) => toggleEnabled(rate.id),
+        });
+    }
 
     return (
         <>
