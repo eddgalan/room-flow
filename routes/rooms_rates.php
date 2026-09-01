@@ -12,5 +12,9 @@ Route::prefix($adminPath)->middleware(['auth'])->group(function () {
         ->middlewareFor(
             'index',
             'can:'.RoomRateResources::LIST
+        )
+        ->middlewareFor(
+            'create',
+            'can:'.RoomRateResources::CREATE
         );
 });

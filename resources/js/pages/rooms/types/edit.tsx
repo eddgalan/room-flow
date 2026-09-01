@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import RoomTypeForm from '@/components/room-flow/roomtypes/room-type-form';
+import RoomTypeForm from '@/components/room-flow/room-types/room-type-form';
 import { index as roomsIndex } from '@/routes/rooms';
 import { index } from '@/routes/types';
 import type { RoomType } from '@/types/room-flow/room-type';
