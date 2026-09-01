@@ -129,7 +129,7 @@ export default function RoomRateForm({ roomRate }: Props) {
                             </Select>
                             <InputError message={errors.duration_unit} />
                         </div>
-                        <div className="flex items-center gap-2 py-2 sm:col-span-3">
+                        <div className="flex items-center gap-2 py-2 sm:col-span-2">
                             <input
                                 type="hidden"
                                 name="allow_multiple"
@@ -148,7 +148,7 @@ export default function RoomRateForm({ roomRate }: Props) {
                             </Label>
                             <InputError message={errors.allow_multiple} />
                         </div>
-                        <div className="flex items-center gap-2 py-2 sm:col-span-3">
+                        <div className="flex items-center gap-2 py-2 sm:col-span-2">
                             <input
                                 type="hidden"
                                 name="uses_checkin_schedule"
