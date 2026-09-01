@@ -6,6 +6,8 @@ class RoomRateResources implements ResourceDefinition
 {
     public const string LIST = 'rooms.rates.index';
 
+    public const string CREATE = 'rooms.rates.create';
+
     /**
      * @return string[]
      */
@@ -13,6 +15,7 @@ class RoomRateResources implements ResourceDefinition
     {
         return [
             self::LIST => 'List all room rates',
+            self::CREATE => 'Create a room rate',
         ];
     }
 }

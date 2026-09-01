@@ -14,6 +14,7 @@ export const permissions = {
             },
             rate: {
                 list: 'rooms.rates.index',
+                create: 'rooms.rates.create',
             }
         },
         security: 'settings.security',
