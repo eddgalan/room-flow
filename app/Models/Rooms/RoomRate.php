@@ -20,6 +20,12 @@ use Illuminate\Support\Carbon;
  */
 class RoomRate extends Model implements HasQuery
 {
+    public const string HOURS = 'hours';
+
+    public const string MINUTES = 'minutes';
+
+    public const string DAYS = 'days';
+
     protected $fillable = [
         'name',
         'description',

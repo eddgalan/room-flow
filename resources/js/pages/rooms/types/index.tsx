@@ -73,7 +73,7 @@ Index.layout = {
             href: roomsIndex().url,
         },
         {
-            title: 'Room Types',
+            title: 'Types',
             href: index().url,
         },
     ],

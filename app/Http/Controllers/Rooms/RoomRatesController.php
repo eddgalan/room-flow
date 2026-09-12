@@ -28,7 +28,9 @@ class RoomRatesController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('rooms/rates/create');
+        return Inertia::render('rooms/rates/create', [
+            'durationUnits' => $this->durationUnits(),
+        ]);
     }
 
     /**
@@ -116,6 +118,7 @@ class RoomRatesController extends Controller
     {
         return Inertia::render('rooms/rates/edit', [
             'roomRate' => $rate,
+            'durationUnits' => $this->durationUnits(),
         ]);
     }
 
@@ -146,5 +149,17 @@ class RoomRatesController extends Controller
         }
 
         return to_route('rates.index');
+    }
+
+    /**
+     * @return string[]
+     */
+    private function durationUnits(): array
+    {
+        return [
+            RoomRate::MINUTES,
+            RoomRate::HOURS,
+            RoomRate::DAYS,
+        ];
     }
 }

@@ -18,9 +18,10 @@ import type { RoomRate } from '@/types/room-flow/room-rate';
 
 type Props = {
     roomRate?: RoomRate;
+    durationUnits: string[];
 };
 
-export default function RoomRateForm({ roomRate }: Props) {
+export default function RoomRateForm({ roomRate, durationUnits }: Props) {
     const form = roomRate ? update.form(roomRate.id) : store.form();
     const isEditing = Boolean(roomRate);
     const [isActive, setIsActive] = useState(Boolean(roomRate?.enabled));
@@ -120,11 +121,11 @@ export default function RoomRateForm({ roomRate }: Props) {
                                     <SelectValue placeholder="Select unit" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="minutes">
-                                        Minutes
-                                    </SelectItem>
-                                    <SelectItem value="hours">Hours</SelectItem>
-                                    <SelectItem value="days">Days</SelectItem>
+                                    {durationUnits.map((item) => (
+                                        <SelectItem key={item} value={item}>
+                                            {item}
+                                        </SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
                             <InputError message={errors.duration_unit} />

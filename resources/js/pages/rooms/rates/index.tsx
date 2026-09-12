@@ -68,7 +68,7 @@ export default function Index() {
                 <DataTable<RoomRateRow>
                     endpoint={list.url()}
                     headers={headers}
-                    caption="Room Types list"
+                    caption="Room Rates list"
                     actions={actions}
                 />
             </div>

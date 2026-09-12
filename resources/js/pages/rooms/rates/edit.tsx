@@ -6,15 +6,19 @@ import type { RoomRate } from '@/types/room-flow/room-rate';
 
 type Props = {
     roomRate: RoomRate;
+    durationUnits: string[];
 };
 
-export default function Edit({ roomRate }: Props) {
+export default function Edit({ roomRate, durationUnits }: Props) {
     return (
         <>
             <Head title="Edit Room Rate" />
 
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <RoomRateForm roomRate={roomRate} />
+                <RoomRateForm
+                    roomRate={roomRate}
+                    durationUnits={durationUnits}
+                />
             </div>
         </>
     );
